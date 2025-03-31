@@ -7,6 +7,9 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class ProdutoController : ControllerBase
     {
-
+        public string Metodo()
+        {
+            
+        }
     }
 }
