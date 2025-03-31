@@ -1,15 +1,21 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+namespace API.Controllers;
 
-namespace API.Controllers
+[ApiController]
+[Route("api/produto")]
+public class ProdutoController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProdutoController : ControllerBase
+    //Exemplo de um método dentro de uma classe
+    public string Metodo()
     {
-        public string Metodo()
-        {
-            
-        }
+        return "";
     }
+
+    //Exemplo de um EndPoint dentro de um Controller
+    [HttpGet("helloworld")]
+    public IActionResult Helloworld()
+    {
+        return Ok("Hello World!");
+    }
+
 }
