@@ -1,6 +1,8 @@
+using API.Models;
+
 namespace API.Data;
 
-public interface IProdutoReposity
+public interface IProdutoRepository
 {
     void Cadastrar(Produto produto);
     List<Produto> Listar();

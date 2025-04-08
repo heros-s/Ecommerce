@@ -1,7 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
+using API.Data;
+using API.Models;
+
 namespace API.Controllers;
 
 [ApiController]
+
 [Route("api/produto")]
 public class ProdutoController : ControllerBase
 {
@@ -13,18 +17,25 @@ public class ProdutoController : ControllerBase
     }
     */
 
-    private readonly AppDataContext _context;
-    public ProdutoController(AppDataContext context)
+    private readonly IProdutoRepository _produtoRepository;
+    public ProdutoController(IProdutoRepository produtoRepository)
     {
-        _context = context;
+        _produtoRepository = produtoRepository;
     }
+
     //Exemplo de um EndPoint dentro de um Controller
     [HttpPost("cadastrar")]
-    public IActionResult Cadastrar([FromBody] ProdutoController produto)
+    public IActionResult Cadastrar([FromBody] Produto produto)
     {
-        _context.Produtos.Add(produto);
-        _context.SaveChanges();
+        _produtoRepository.Cadastrar(produto);
+        _produtoRepository.SaveChanges();
         return Created("", produto);
+    }
+
+    [HttpGet("listar")]
+    public IActionResult Listar()
+    {
+        return Ok(_produtoRepository.Listar());
     }
 
 }
