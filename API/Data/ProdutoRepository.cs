@@ -13,7 +13,6 @@ namespace API.Data;
         {
             _context.Produtos.Add(produto);
             _context.SaveChanges();
-            return Created("", produto);
         }
 
         public List<Produto> Listar()

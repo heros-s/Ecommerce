@@ -28,7 +28,6 @@ public class ProdutoController : ControllerBase
     public IActionResult Cadastrar([FromBody] Produto produto)
     {
         _produtoRepository.Cadastrar(produto);
-        _produtoRepository.SaveChanges();
         return Created("", produto);
     }
 

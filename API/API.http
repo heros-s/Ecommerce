@@ -1,9 +1,22 @@
-@url_base = http://localhost:5056/api/produto
+@url_base = http://localhost:5056/api/usuario
 
 ### Cadastrar produto
 POST {{url_base}}/cadastrar
 Content-Type: application/json
 
 {
-    "Nome": "TesteProduto"
+    "Nome": "ProdutoNovo"
 }
+
+### Cadastrar usuario
+POST {{url_base}}/cadastrar
+Content-Type: application/json
+
+{
+    "Nome": "Heros Dinao",
+    "Email": "herosdinao@gmail.com",
+    "Senha": "Galo"
+}
+
+### Listar usuarios
+GET {{url_base}}/listar
