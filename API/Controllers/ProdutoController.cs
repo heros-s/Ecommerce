@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using API.Data;
 using API.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers;
 
@@ -25,6 +26,7 @@ public class ProdutoController : ControllerBase
 
     //Exemplo de um EndPoint dentro de um Controller
     [HttpPost("cadastrar")]
+    [Authorize]
     public IActionResult Cadastrar([FromBody] Produto produto)
     {
         _produtoRepository.Cadastrar(produto);

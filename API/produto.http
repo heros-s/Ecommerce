@@ -1,0 +1,13 @@
+@url_base = http://localhost:5056/api/produto
+
+### Cadastrar produto
+POST {{url_base}}/cadastrar
+Content-Type: application/json
+Authorization: Bearer
+
+{
+    "Nome": "NovoTeste"
+}
+
+### Listar produtos
+POST {{url_base}}/listar

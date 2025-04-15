@@ -10,6 +10,13 @@ namespace API.Data
         {
             _context = context;
         }
+
+        public Usuario? BuscarUsuarioPorEmailSenha(string email, string senha)
+        {
+            Usuario? usuarioExistente = _context.Usuarios.FirstOrDefault
+                (x => x.Email == email && x.Senha == senha);
+            return usuarioExistente;
+        }
         public void Cadastrar(Usuario usuario)
         {
             _context.Usuarios.Add(usuario);

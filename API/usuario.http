@@ -13,10 +13,19 @@ POST {{url_base}}/cadastrar
 Content-Type: application/json
 
 {
-    "Nome": "Heros Dinao",
-    "Email": "herosdinao@gmail.com",
+    "Email": "novoteste@gmail.com",
+    "Senha": "Galo"
+}
+
+### Login
+POST {{url_base}}/login
+Content-Type: application/json
+
+{
+    "Email": "novoteste@gmail.com",
     "Senha": "Galo"
 }
 
 ### Listar usuarios
 GET {{url_base}}/listar
+

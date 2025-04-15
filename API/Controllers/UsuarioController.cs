@@ -1,6 +1,10 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using API.Data;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API.Controllers;
 
@@ -9,11 +13,14 @@ namespace API.Controllers;
 public class UsuarioController : ControllerBase
 {
     private readonly IUsuarioRepository _usuarioRepository;
-    public UsuarioController(IUsuarioRepository usuarioRepository)
+    private readonly IConfiguration _configuration;
+    public UsuarioController(IUsuarioRepository usuarioRepository, IConfiguration configuration)
     {
         _usuarioRepository = usuarioRepository;
+        _configuration = configuration;
     }
 
+/*
     [HttpPost("cadastrar")]
     public IActionResult Cadastrar([FromBody] Usuario usuario)
     {
@@ -22,24 +29,56 @@ public class UsuarioController : ControllerBase
         _usuarioRepository.Cadastrar(usuario);
         return Created("", usuario);
     }
+*/
+    [HttpPost("cadastrar")]
+    public IActionResult Cadastrar([FromBody] Usuario usuario)
+    {
+        // usuario.CriadoEM = DateTime.Now; // para corrigir o horário
+        _usuarioRepository.Cadastrar(usuario);
+        return Created("", usuario);
+    }
 
+    [HttpPost("login")]
+    public IActionResult Login([FromBody] Usuario usuario)
+    {
+        Usuario? usuarioExistente = _usuarioRepository
+            .BuscarUsuarioPorEmailSenha(usuario.Email, usuario.Senha);
+        if(usuarioExistente == null)
+        {
+            return Unauthorized(new {mensagem = "Usuario ou senha invalidos!"});
+        }
+
+        string token = GerarToken(usuarioExistente);
+        return Ok(token);
+    }
 
     [HttpGet("listar")]
     public IActionResult Listar([FromQuery] string? email, [FromQuery] string? senha)
     {
-        var usuarios = _usuarioRepository.Listar();
-
-        if (!string.IsNullOrEmpty(email))
+        return Ok(_usuarioRepository.Listar());
+    }
+    
+    public string GerarToken(Usuario usuario)
+    {
+        var claims = new[]
         {
-            usuarios = usuarios.Where(u => u.Email == email).ToList();
-        }
+            new Claim(ClaimTypes.Name, usuario.Email),
+            new Claim(ClaimTypes.Role, usuario.Permissao.ToString())
+        };
+        
+        var chave = Encoding.UTF8.GetBytes(_configuration["JwtSettings:SecretKey"]!);
 
-        if (!string.IsNullOrEmpty(senha))
-        {
-            usuarios = usuarios.Where(u => u.Senha == senha).ToList();
-        }
+        var assinatura = new SigningCredentials(
+            new SymmetricSecurityKey(chave),
+            SecurityAlgorithms.HmacSha256
+        );
 
-    return Ok(usuarios);
-}
+        var token = new JwtSecurityToken(
+            claims: claims,
+            expires: DateTime.Now.AddSeconds(30),
+            signingCredentials: assinatura
+        );
 
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
 }
