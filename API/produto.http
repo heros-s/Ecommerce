@@ -2,11 +2,11 @@
 
 ### Cadastrar produto
 POST {{url_base}}/cadastrar
-Content-Type: application/json
 Authorization: Bearer
+Content-Type: application/json
 
 {
-    "Nome": "NovoTeste"
+    "Nome": "Produto novo"
 }
 
 ### Listar produtos

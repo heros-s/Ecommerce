@@ -26,7 +26,7 @@ public class ProdutoController : ControllerBase
 
     //Exemplo de um EndPoint dentro de um Controller
     [HttpPost("cadastrar")]
-    [Authorize]
+    [Authorize(Roles = "administrador")]
     public IActionResult Cadastrar([FromBody] Produto produto)
     {
         _produtoRepository.Cadastrar(produto);
@@ -34,6 +34,7 @@ public class ProdutoController : ControllerBase
     }
 
     [HttpGet("listar")]
+    [Authorize]
     public IActionResult Listar()
     {
         return Ok(_produtoRepository.Listar());

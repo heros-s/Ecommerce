@@ -58,6 +58,7 @@ public class UsuarioController : ControllerBase
         return Ok(_usuarioRepository.Listar());
     }
     
+    [ApiExplorerSettings(IgnoreApi = true)]
     public string GerarToken(Usuario usuario)
     {
         var claims = new[]

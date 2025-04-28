@@ -1,20 +1,12 @@
 @url_base = http://localhost:5056/api/usuario
 
-### Cadastrar produto
-POST {{url_base}}/cadastrar
-Content-Type: application/json
-
-{
-    "Nome": "ProdutoNovo"
-}
-
 ### Cadastrar usuario
 POST {{url_base}}/cadastrar
 Content-Type: application/json
 
 {
-    "Email": "novoteste@gmail.com",
-    "Senha": "Galo"
+    "Email": "admin",
+    "Senha": "senha"
 }
 
 ### Login
@@ -22,10 +14,9 @@ POST {{url_base}}/login
 Content-Type: application/json
 
 {
-    "Email": "novoteste@gmail.com",
-    "Senha": "Galo"
+    "Email": "admin",
+    "Senha": "senha"
 }
 
 ### Listar usuarios
 GET {{url_base}}/listar
-
